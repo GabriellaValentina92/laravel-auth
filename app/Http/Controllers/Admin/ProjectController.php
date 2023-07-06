@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+
+    private $validation = [
+        'title'=> 'required|string|max:200',
+        'project_image'=> 'required|url|max:200',
+        'project_description' => 'required|string',
+        'url_github' => 'required|url|max:200',
+            
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +35,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -37,7 +46,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validation);
+
+        $data = $request->all();
+        // salvare i dati nel db (questo metodo anche se è più lungo è il più sicuro)
+        $newProject = new Project();
+        $newProject->title = $data['title'];
+        $newProject->project_image = $data['project_image'];
+        $newProject->project_description = $data['project_description'];
+        $newProject->url_github = $data['url_github'];
+        $newProject-> save();
+
+        unset($data['_token']);
+        return redirect()-> route('admin.projects.show', ['project'=> $newProject->id]);
     }
 
     /**
@@ -59,7 +80,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -71,7 +92,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate($this->validation);
+
+        $data = $request->all();
+        // cambiare i dati inseriti
+        
+        $project->title = $data['title'];
+        $project->project_image = $data['project_image'];
+        $project->project_description = $data['project_description'];
+        $project->url_github = $data['url_github'];
+        $project-> update();
+
+        unset($data['_token']);
+        return to_route('admin.projects.show', ['project'=> $project->id]);
     }
 
     /**
