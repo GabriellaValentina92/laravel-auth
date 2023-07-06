@@ -1,0 +1,10 @@
+@extends('admin.layouts.base')
+
+@section('contents')
+
+    <h1>{{ $project->title }}</h1>
+    <img src="{{ $project->project_image }}" alt="{{ $project->project_image }}">
+    <p>{{ $project->project_description }}</p>
+    <div>Per andare alla repository del progetto <a href="https://github.com/GabriellaValentina92?tab=repositories">Clicca qui</a></div>
+
+@endsection
