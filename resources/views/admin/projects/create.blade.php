@@ -17,7 +17,7 @@
 
         <div class="mb-3">
             <label for="project_image" class="form-label">image url</label>
-            <input class="form-control @error('project_image') is-invalid @enderror" id="project_image" rows="3" name="project_image" value="{{ old('project_image') }}">
+            <input type="url" class="form-control @error('project_image') is-invalid @enderror" id="project_image" rows="3" name="project_image" value="{{ old('project_image') }}">
             <div class="invalid-feedback">
                 @error('project_image') {{ $message }} @enderror
             </div>
@@ -25,7 +25,7 @@
 
         <div class="mb-3">
             <label for="url_github" class="form-label">url_github</label>
-            <input type="text" class="form-control @error('url_github') is-invalid @enderror" id="url_github" name="url_github" value="{{ old('url_github') }}">
+            <input type="url" class="form-control @error('url_github') is-invalid @enderror" id="url_github" name="url_github" value="{{ old('url_github') }}">
             <div class="invalid-feedback">
                 @error('url_github') {{ $message }} @enderror
             </div>
@@ -33,7 +33,7 @@
 
         <div class="mb-3">
             <label for="project_description" class="form-label">project_description</label>
-            <input project_description="text" class="form-control @error('project_description') is-invalid @enderror" id="project_description" name="project_description" value="{{ old('project_description') }}">
+            <textarea class="form-control @error('project_description') is-invalid @enderror" id="project_description" name="project_description" cols="30" rows="10"> {{ old('project_description') }} </textarea>
             <div class="invalid-feedback">
                 @error('project_description') {{ $message }} @enderror
             </div>
