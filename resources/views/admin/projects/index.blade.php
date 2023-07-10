@@ -43,6 +43,7 @@
                 <td>
                     <a class="btn btn-primary" href="{{ route('admin.projects.show', ['project' => $project->id]) }}">View</a>
                     <a class="btn btn-warning" href="{{ route('admin.projects.edit', ['project' => $project->id]) }}">Edit</a>
+                    
                     <form
                         action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}"
                         method="project"

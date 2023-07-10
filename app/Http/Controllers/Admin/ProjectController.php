@@ -17,6 +17,12 @@ class ProjectController extends Controller
             
     ];
 
+    private $validation_messages = [
+        'required'  => 'Il campo :attribute è obbligatorio',
+        'max'       => 'Il campo :attribute non può superare i :max caratteri',
+        'url'       => 'Il campo deve essere un url valido',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +52,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->validation);
+        $request->validate($this->validation, $this->validation_messages);
 
         $data = $request->all();
         // salvare i dati nel db (questo metodo anche se è più lungo è il più sicuro)
@@ -58,7 +64,7 @@ class ProjectController extends Controller
         $newProject-> save();
 
         unset($data['_token']);
-        return redirect()-> route('admin.projects.show', ['project'=> $newProject->id]);
+        return redirect()-> route('admin.projects.show', ['project'=> $newProject]);
     }
 
     /**
@@ -92,7 +98,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $request->validate($this->validation);
+        $request->validate($this->validation, $this->validation_messages);
 
         $data = $request->all();
         // cambiare i dati inseriti
@@ -104,7 +110,7 @@ class ProjectController extends Controller
         $project-> update();
 
         unset($data['_token']);
-        return to_route('admin.projects.show', ['project'=> $project->id]);
+        return to_route('admin.projects.show', ['project'=> $project]);
     }
 
     /**
@@ -115,6 +121,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return to_route('admin.projects.index')->with('delete_success', $project);
     }
 }
